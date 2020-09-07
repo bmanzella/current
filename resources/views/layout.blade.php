@@ -101,12 +101,12 @@
                             Division Info <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{secure_url('info/policies')}}">Policies</a></li>
-                            <li><a href="{{secure_url("cbt")}}">Computer Based Training (CBT)</a></li>
+                            <li><a href="{{url('info/policies')}}">Policies</a></li>
+                            <li><a href="{{url("cbt")}}">Computer Based Training (CBT)</a></li>
                             <li><a href="https://forums.vatusa.net/?action=calendar">Events Calendar</a></li>
-                            <li><a href="{{secure_url('info/members')}}">Members and Staff</a></li>
+                            <li><a href="{{url('info/members')}}">Members and Staff</a></li>
                             <li><a href="/info/solo">Solo Certs</a></li>
-                            <li><a href="{{secure_url('info/ace')}}">ACE Team</a></li>
+                            <li><a href="{{url('info/ace')}}">ACE Team</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -208,18 +208,18 @@
                                                 aria-expanded="false">
                                 <i class="fa fa-user"></i> My VATUSA<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{secure_url('my/profile')}}">Profile</a></li>
+                                <li><a href="{{url('my/profile')}}">Profile</a></li>
                                 @if(!Auth::user()->selectionEligible() && !Auth::user()->transferEligible())
                                 <li><a href="/my/profile">Why can I not join a facility?</a></li>
                                 @endif
                                 @if(Auth::user()->facility()->active || Auth::user()->facility == "ZHQ" || (Auth::user()->transferEligible() && !Auth::user()->selectionEligible()))
-                                    <li><a href="{{secure_url('my/transfer')}}">Transfer Request</a></li>
+                                    <li><a href="{{url('my/transfer')}}">Transfer Request</a></li>
                                 @endif
                                 @if (Auth::user()->selectionEligible())
-                                    <li><a href="{{secure_url('my/select')}}">Join Facility</a></li>
+                                    <li><a href="{{url('my/select')}}">Join Facility</a></li>
                                 @endif
-                                <li><a href="{{secure_url('exam')}}">Exam Center</a></li>
-                                <li><a href="{{secure_url("cbt")}}">Computer Based Training (CBT)</a></li>
+                                <li><a href="{{url('exam')}}">Exam Center</a></li>
+                                <li><a href="{{url("cbt")}}">Computer Based Training (CBT)</a></li>
                                 @if(Auth::user()->flag_needbasic)
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/my/assignbasic">Request Basic ATC Exam</a></li>
@@ -234,28 +234,29 @@
                                     <i class="fa fa-cogs"></i> Actions<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     @if(\App\Classes\RoleHelper::isMentor() || \App\Classes\RoleHelper::isInstructor() || \App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::isVATUSAStaff() || \App\Classes\RoleHelper::hasRole(\Auth::user()->cid, \Auth::user()->facility, "WM"))
-                                        <li><a href="{{secure_url("mgt/facility")}}">Facility Management</a></li>
-                                        <li><a href="{{secure_url("mgt/controller")}}">Member Management</a></li>
+                                        <li><a href="{{url("mgt/facility")}}">Facility Management</a></li>
+                                        <li><a href="{{url("mgt/controller")}}">Member Management</a></li>
                                     @endif
                                     @if(\App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::hasRole(\Auth::user()->cid, \Auth::user()->facility, "WM") || \App\Classes\RoleHelper::hasRole(\Auth::user()->cid, \Auth::user()->facility, "FE"))
-                                      <li><a href="{{secure_url('mgt/tmu')}}">TMU Map Management</a></li>
+                                      <li><a href="{{url('mgt/tmu')}}">TMU Map Management</a></li>
                                     @endif
                                     @if(\App\Classes\RoleHelper::isInstructor() || \App\Classes\RoleHelper::isFacilitySeniorStaff())
-                                        <li><a href="{{secure_url("exam")}}">Exam Management</a></li>
+                                        <li><a href="{{url("exam")}}">Exam Management</a></li>
                                     @endif
                                     @if (\App\Classes\RoleHelper::isVATUSAStaff() || \App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::isAcademyStaff())
-                                        <li><a href="{{secure_url("cbt/editor")}}">CBT Editor</a></li>
+                                        <li><a href="{{url("cbt/editor")}}">CBT Editor</a></li>
                                     @endif
                                     @if(\App\Classes\RoleHelper::isFacilityStaff())
-                                    <li><a href="{{secure_url("mgt/mail")}}">Email Management</a></li>
+                                    <li><a href="{{url("mgt/mail")}}">Email Management</a></li>
+                                    @endif
                                     @if (\App\Classes\RoleHelper::isFacilitySeniorStaff())
                                         <li><a href="{{url("mgt/app/push")}}">iDENT App Management</a></li>
                                     @endif
                                     @if (\App\Classes\RoleHelper::isVATUSAStaff())
                                         <li><a href="/mgt/checklists">Training Checklists Management</a></li>
-                                        <li><a href="{{secure_url("mgt/ace")}}">ACE Team Management</a></li>
-                                        <li><a href="{{secure_url("mgt/staff")}}">Division Staff Management</a></li>
-                                        <li><a href="{{secure_url("mgt/err")}}">Submit Transfer Request</a></li>
+                                        <li><a href="{{url("mgt/ace")}}">ACE Team Management</a></li>
+                                        <li><a href="{{url("mgt/staff")}}">Division Staff Management</a></li>
+                                        <li><a href="{{url("mgt/err")}}">Submit Transfer Request</a></li>
                                     @endif
                                     <li><a href="/stats">Division Statistics</a></li>
                                     @if(\App\Classes\RoleHelper::isInstructor() || \App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::isVATUSAStaff())

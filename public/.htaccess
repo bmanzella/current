@@ -1,3 +1,4 @@
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
@@ -6,8 +7,8 @@
     RewriteEngine On
 
     # Redirect flat domain to www
-    RewriteCond %{HTTP_HOST} ^vatusa\.net [NC]
-    RewriteRule ^(.*)$ https://www.vatusa.net/$1 [R,L]
+#    RewriteCond %{HTTP_HOST} ^vatusa\.devel [NC]
+#    RewriteRule ^(.*)$ http://vatusa.devel/$1 [R,L]
 
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
