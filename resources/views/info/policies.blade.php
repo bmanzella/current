@@ -19,9 +19,7 @@
                     </thead>
                     <tbody>
                     <tr class="no-hover">
-                        <td><strong>General Division</strong></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td colspan="3"><strong>General Division</strong></td>
                     </tr>
                     <tr>
                         <td>DP001 &mdash; Division General Policy</td>
@@ -30,18 +28,27 @@
                     </tr>
                     <tr>
                         <td>DP003 &mdash; Event Submission Policy</td>
-                        <td>03/10/2018</td>
+                        <td>01/01/2020</td>
                         <td><a href="/docs/DP003.pdf" target="_blank">view</a></td>
                     </tr>
                     <tr>
+                        <td>GO 32020.1 &mdash; Temporary Suspension of Live Events</td>
+                        <td>09/07/2020</td>
+                        <td><a href="/docs/GO-320201.pdf" target="_blank">view</a></td>
+                    </tr>
+                    <tr>
+                        <td>GO 61720 &mdash; C3 Senior Controller Program</td>
+                        <td>08/16/2020</td>
+                        <td><a href="/docs/GO-61720.pdf" target="_blank">view</a></td>
+                    </tr>
+                    <tr>
                         <td>Chain of Command Flow Chart</td>
-                        <td>07/21/2019</td>
-                        <td><a href="/docs/orgchart.pdf" target="_blank">view</a></td>
+                        <td>August 2020</td>
+                        <!--<td><a href="/docs/orgchart-new.png" target="_blank">view</a></td>-->
+                        <td><em rel="tooltip" title="Policy is a Work In Progress">WIP</em></td>
                     </tr>
                     <tr class="no-hover">
-                        <td><strong>Training Administration</strong></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td colspan="3"><strong>Training Administration</strong></td>
                     </tr>
                     <tr>
                         <td>3120.1A &mdash; Division Interpretation on VATNA S1 Directive</td>
@@ -50,9 +57,18 @@
                     </tr>
                     <tr>
                         <td>3120.311 &mdash; Procedures for Selection, Submission, and Appointment of Instructors</td>
-                        <td>03/22/2019</td>
+                        <td>03/20/2020</td>
                         @if(\Auth::check())
                             <td><a href="/docs/3120.311.pdf" target="_blank">view</a></td>
+                        @else
+                            <td>internal</td>
+                        @endif
+                    </tr>
+                    <tr>
+                        <td>3120.1D &mdash; Instructor Developmental Detail Program</td>
+                        <td>04/10/2020</td>
+                        @if(\Auth::check())
+                            <td><a href="/docs/3120.1D.pdf" target="_blank">view</a></td>
                         @else
                             <td>internal</td>
                         @endif
@@ -99,18 +115,16 @@
                         @endif
                     </tr>
                     <tr class="no-hover">
-                        <td><strong>Information Technology</strong></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td colspan="3"><strong>Information Technology</strong></td>
                     </tr>
                     <tr>
                         <td>D1021.1B &mdash; Division Email Scheme</td>
-                        <td>07/5/2019</td>
+                        <td>07/05/2019</td>
                         <td><a href="/docs/D1021.1.pdf" target="_blank">view</a></td>
                     </tr>
                     <tr>
                         <td>M1022B &mdash; Unified Login Scheme</td>
-                        <td>07/5/2019</td>
+                        <td>07/05/2019</td>
                         @if(\Auth::check() && (\App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::hasRole(\Auth::user()->cid, \Auth::user()->facility, 'WM') || \App\Classes\RoleHelper::isVATUSAStaff()))
                             <td><a href="/docs/M1022.pdf" target="_blank">view</a></td>
                         @else
@@ -124,7 +138,7 @@
                     </tr>
                     <tr>
                         <td>T1000.1 &mdash; APIv2</td>
-                        <td>August 2019</td>
+                        <td>Soon&trade;</td>
                         <td><em rel="tooltip" title="Policy is a Work In Progress">WIP</em></td>
                        {{-- @if(\Auth::check() && (\App\Classes\RoleHelper::isFacilitySeniorStaff() || \App\Classes\RoleHelper::hasRole(\Auth::user()->cid, \Auth::user()->facility, 'WM') || \App\Classes\RoleHelper::isVATUSAStaff()))
                             <td><a href="/docs/T1000.1.pdf" target="_blank">view</a></td>

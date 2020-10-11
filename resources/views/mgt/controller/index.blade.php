@@ -18,7 +18,7 @@
           message : '<strong>Are you sure you want to delete the log entry?</strong><hr style="margin-top:10px;margin-bottom:10px;">' + content,
           buttons : {
             confirm: {
-              label    : '<i class="fa fa-remove"></i> Yes, delete',
+              label    : '<i class="fas fa-times"></i> Yes, delete',
               className: 'btn-danger'
             },
             cancel : {
@@ -190,7 +190,7 @@
                                                 <p class="text-success"><i class="fa fa-check"></i> Receiving Broadcast
                                                     Emails</p>
                                             @else
-                                                <p class="text-danger"><i class="fa fa-remove"></i> Not Receiving
+                                                <p class="text-danger"><i class="fas fa-times"></i> Not Receiving
                                                     Broadcast
                                                     Emails
                                                 </p>
@@ -201,13 +201,15 @@
                                         <li>{{$u->facility}}
                                             - {{\App\Classes\Helper::facShtLng($u->facility)}}</li>
                                         <li>Member of {{$u->facility}} since {{ $u->facility_join }}</li>
-                                        <li>Mentor?
-                                            @if(\App\Classes\RoleHelper::isVATUSAStaff() || \App\Classes\RoleHelper::isFacilitySeniorStaff(\Auth::user()->cid, $u->facility))
-                                                <a href="/mgt/controller/{{$u->cid}}/mentor">{{(\App\Classes\RoleHelper::isMentor($u->cid))?"Yes":"No"}}</a>
-                                            @else
-                                                {{(\App\Classes\RoleHelper::isMentor($u->cid))?"Yes":"No"}}
-                                            @endif
-                                        </li>
+                                        @if(!str_contains($u->urating->long, "Instructor"))
+                                            <li>Mentor?
+                                                @if(\App\Classes\RoleHelper::isVATUSAStaff() || \App\Classes\RoleHelper::isFacilitySeniorStaff(\Auth::user()->cid, $u->facility))
+                                                    <a href="/mgt/controller/{{$u->cid}}/mentor">{{(\App\Classes\RoleHelper::isMentor($u->cid))?"Yes":"No"}}</a>
+                                                @else
+                                                    {{(\App\Classes\RoleHelper::isMentor($u->cid))?"Yes":"No"}}
+                                                @endif
+                                            </li>
+                                        @endif
                                         <br>
                                         <li>Last Activity Forum: {{$u->lastActivityForum()}} days ago</li>
                                         <li>Last Activity Website: {{$u->lastActivityWebsite()}} days ago</li>
@@ -251,7 +253,7 @@
                                                     </option>
                                                 </select>
                                                 <div class="alert alert-danger" id="ratingchange-warning"
-                                                     style="display:none;"><strong><i class="fa fa-warning"></i>
+                                                     style="display:none;"><strong><i class="fas fa-times"></i>
                                                         Warning!</strong> This controller currently has the Prevent
                                                     Staff Role Assignment flag.
                                                 </div>
@@ -312,7 +314,7 @@
                                             @endif
                                         </tr>
                                         <tr>
-                                            <td>Has it been at least 90 days since promotion to S1, S2 or S3?</td>
+                                            <td>Has it been at least 90 days since promotion to S1, S2, S3, or C1?</td>
                                             <td>{!! ($checks['promo'])?'<i class="fa fa-check text-success"></i>':'<i class="fa fa-times text-danger"></i>' !!}</td>
                                         </tr>
                                         <tr>
@@ -350,15 +352,18 @@
                                         </thead>
                                         @foreach (\App\Promotions::where('cid', $u->cid)->orderby('created_at', 'desc')->get() as $promo)
                                             <tr style="text-align: center">
-                                                <td style="width:20%">{!! $promo->created_at->format('m/d/Y') !!}</td>
-                                                <td>
+                                                <td style="width:30%">{!! $promo->created_at->format('m/d/Y') !!}
+                                                    <br><em>{{ \App\Classes\Helper::nameFromCID($promo->grantor) }}</em>
+                                                </td>
+                                                <td style="vertical-align: middle">
                                                     <strong>{{ \App\Classes\Helper::ratingShortFromInt($promo->from) }}</strong>
                                                 </td>
-                                                <td class="{{(($promo->from < $promo->to)? 'text-success' : 'text-danger')}}">
+                                                <td style="vertical-align: middle"
+                                                    class="{{(($promo->from < $promo->to)? 'text-success' : 'text-danger')}}">
                                                     <i
                                                         class="fa {{(($promo->from < $promo->to)? 'fa-arrow-up' : 'fa-arrow-down')}}"></i>
                                                 </td>
-                                                <td>
+                                                <td style="vertical-align: middle">
                                                     <strong>{{ \App\Classes\Helper::ratingShortFromInt($promo->to) }}</strong>
                                                 </td>
                                             </tr>
@@ -525,7 +530,7 @@
                                                            href="#"
                                                            data-action="{{ secure_url('mgt/deleteActionLog/'.$a->id) }}"
                                                            class="text-danger delete-log"><i
-                                                                class="fa fa-remove"></i></a>
+                                                                class="fa fa-times"></i></a>
                                                         <i class="spinner-icon fa fa-spinner fa-spin"
                                                            style="display:none;"></i>
 
@@ -551,7 +556,8 @@
                                         <i class="spinner-icon fa fa-spinner fa-spin" style="display:none;"></i>
                                     </span>
                                         <p class="help-block">This will prevent the controller from being assigned a
-                                            staff role by facility staff. <br> Only a VATUSA Staff Member will be able to
+                                            staff role by facility staff. <br> Only a VATUSA Staff Member will be able
+                                            to
                                             assign him or her a role.</p>
                                     </div>
                                 </div>
@@ -587,8 +593,7 @@
                                         <label class="col-sm-2 control-label">Instructor</label>
                                         <div class="col-sm-10">
                                             <p class="form-control-static" style="cursor:default;">
-                                                @if(\App\Role::where("facility", $u->facility)
-                                                    ->where("cid", $u->cid)->where("role", "INS")->count())
+                                                @if(\App\Classes\RoleHelper::isInstructor($u->cid, $u->facility))
                                                     <strong style="color:green">Yes</strong>
                                                 @else <strong style="color:#e72828">No</strong>
                                                 @endif
